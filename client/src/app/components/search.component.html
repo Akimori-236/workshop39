@@ -1,0 +1,9 @@
+<div>
+  <h1>View 0 - Search</h1>
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div class="row">
+      <input class="col form-control" type="text" name="search" id="searchID" formControlName="search"/>
+      <button class="col-2 btn btn-outline-danger" type="submit">Search</button>
+    </div>
+  </form>
+</div>
