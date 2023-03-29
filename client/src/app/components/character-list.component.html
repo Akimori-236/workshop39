@@ -2,8 +2,12 @@
   <h1>View 1 - Character List</h1>
   <table class="table">
     <tbody>
-      <tr *ngFor="let char of characterList">
-        <td>{{char.name}}</td>
+      <tr class="row" *ngFor="let char of characterList">
+        <td class="">
+          <a class="p-3" [routerLink]="['/characters/' + char.id]">
+            {{ char.name }}
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>
