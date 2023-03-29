@@ -3,7 +3,7 @@ package nus.iss.tfip.workshop39.service;
 import java.io.StringReader;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
-import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -19,6 +19,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import nus.iss.tfip.workshop39.hashing.HashingMD5;
+import nus.iss.tfip.workshop39.model.MarvelChar;
 
 @Service
 public class MarvelAPIService {
@@ -30,13 +31,14 @@ public class MarvelAPIService {
     @Value("${private.key}")
     private String privateKey;
 
-    public void getCharacters(int limit, int offset) throws NoSuchAlgorithmException {
+    public List<MarvelChar> getCharacters(String searchTerm, int limit, int offset) throws NoSuchAlgorithmException {
         int ts = Instant.now().hashCode();
         String hash = HashingMD5.generateMarvelHash(ts, privateKey, PUBLIC_KEY);
         System.out.println(ts);
         System.out.println(hash);
 
         String url = UriComponentsBuilder.fromUriString(MARVEL_API)
+                .queryParam("nameStartsWith", searchTerm)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset)
                 .queryParam("ts", ts)
@@ -48,17 +50,63 @@ public class MarvelAPIService {
                 .accept(MediaType.APPLICATION_JSON)
                 .build();
         RestTemplate template = new RestTemplate();
-        ResponseEntity<String> response = null;
+        String payload = "";
         try {
-            response = template.exchange(request, String.class);
+            ResponseEntity<String> response = template.exchange(request, String.class);
+            payload = response.getBody();
         } catch (RestClientException ex) {
-            ex.printStackTrace();
+            System.err.println(ex);
+            // ex.printStackTrace();
             // return Collections.EMPTY_LIST;
         }
         // READ PAYLOAD
-        String payload = response.getBody();
+        // System.out.println("==================================================" +
+        // payload);
         JsonReader reader = Json.createReader(new StringReader(payload));
-        JsonObject newsResp = reader.readObject();
-        JsonArray jsonArr = newsResp.getJsonArray("articles");
+        JsonObject marvelResp = reader.readObject();
+        JsonObject data = marvelResp.getJsonObject("data");
+        JsonArray results = data.getJsonArray("results");
+
+        return results.stream()
+                .map(v -> v.asJsonObject())
+                .map(MarvelChar::toMarvelChar)
+                .toList();
+    }
+
+    public List<MarvelChar> getOneCharacter(int characterId) throws NoSuchAlgorithmException {
+        int ts = Instant.now().hashCode();
+        String hash = HashingMD5.generateMarvelHash(ts, privateKey, PUBLIC_KEY);
+        System.out.println(ts);
+        System.out.println(hash);
+
+        String url = UriComponentsBuilder.fromUriString(MARVEL_API + "/" + characterId)
+                .queryParam("ts", ts)
+                .queryParam("apikey", PUBLIC_KEY)
+                .queryParam("hash", hash)
+                .toUriString();
+        // REQUEST CONTAINER
+        RequestEntity<Void> request = RequestEntity.get(url)
+                .accept(MediaType.APPLICATION_JSON)
+                .build();
+        RestTemplate template = new RestTemplate();
+        String payload = "";
+        try {
+            ResponseEntity<String> response = template.exchange(request, String.class);
+            payload = response.getBody();
+        } catch (RestClientException ex) {
+            System.err.println(ex);
+            // ex.printStackTrace();
+            // return Collections.EMPTY_LIST;
+        }
+        // READ PAYLOAD
+        JsonReader reader = Json.createReader(new StringReader(payload));
+        JsonObject marvelResp = reader.readObject();
+        JsonObject data = marvelResp.getJsonObject("data");
+        JsonArray results = data.getJsonArray("results");
+
+        return results.stream()
+                .map(v -> v.asJsonObject())
+                .map(MarvelChar::toMarvelChar)
+                .toList();
     }
 }

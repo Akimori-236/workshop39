@@ -1,0 +1,154 @@
+{
+    "code": 200,
+    "status": "Ok",
+    "copyright": "© 2023 MARVEL",
+    "attributionText": "Data provided by Marvel. © 2023 MARVEL",
+    "attributionHTML": "<a href=\"http://marvel.com\">Data provided by Marvel. © 2023 MARVEL</a>",
+    "etag": "4664e61a6a8bfe80d8da1ab6a0c33b8e89f6fe03",
+    "data": {
+        "offset": 0,
+        "limit": 20,
+        "total": 1,
+        "count": 1,
+        "results": [
+            {
+                "id": 1011318,
+                "name": "Iron Fist (Bei Bang-Wen)",
+                "description": "",
+                "modified": "1969-12-31T19:00:00-0500",
+                "thumbnail": {
+                    "path": "http://i.annihil.us/u/prod/marvel/i/mg/9/20/53176ebd40ad7",
+                    "extension": "jpg"
+                },
+                "resourceURI": "http://gateway.marvel.com/v1/public/characters/1011318",
+                "comics": {
+                    "available": 6,
+                    "collectionURI": "http://gateway.marvel.com/v1/public/characters/1011318/comics",
+                    "items": [
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/21394",
+                            "name": "Avengers/Invaders (2008) #2"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/21565",
+                            "name": "Avengers/Invaders (2008) #3"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/21761",
+                            "name": "Avengers/Invaders (2008) #4"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/21222",
+                            "name": "The Immortal Iron Fist (2006) #15"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/35247",
+                            "name": "New Avengers (2010) #17"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/comics/41129",
+                            "name": "New Avengers (2010) #17 (Mc 50th Anniversary Variant)"
+                        }
+                    ],
+                    "returned": 6
+                },
+                "series": {
+                    "available": 3,
+                    "collectionURI": "http://gateway.marvel.com/v1/public/characters/1011318/series",
+                    "items": [
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/series/4864",
+                            "name": "Avengers/Invaders (2008 - 2009)"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/series/9922",
+                            "name": "New Avengers (2010 - 2012)"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/series/1140",
+                            "name": "The Immortal Iron Fist (2006 - 2009)"
+                        }
+                    ],
+                    "returned": 3
+                },
+                "stories": {
+                    "available": 10,
+                    "collectionURI": "http://gateway.marvel.com/v1/public/characters/1011318/stories",
+                    "items": [
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/46877",
+                            "name": "THE IMMORTAL IRON FIST (2006) #15",
+                            "type": "cover"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/46878",
+                            "name": "1 of 1",
+                            "type": "interiorStory"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/47241",
+                            "name": "12XLS 2 of 12",
+                            "type": "interiorStory"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/47536",
+                            "name": "Avengers/Invaders (2008) #3",
+                            "type": "cover"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/47537",
+                            "name": "12XLS 3 of 12",
+                            "type": "interiorStory"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/47832",
+                            "name": "Avengers/Invaders (2008) #4",
+                            "type": "cover"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/47833",
+                            "name": "12XLS 4 of 12",
+                            "type": "interiorStory"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/77852",
+                            "name": "New Avengers (2010) #17",
+                            "type": "cover"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/93107",
+                            "name": "New Avengers (2010) #17, Mc 50th Anniversary Variant cover",
+                            "type": "cover"
+                        },
+                        {
+                            "resourceURI": "http://gateway.marvel.com/v1/public/stories/157821",
+                            "name": "cover from Master of Kung Fu Annual (1976) #1",
+                            "type": "cover"
+                        }
+                    ],
+                    "returned": 10
+                },
+                "events": {
+                    "available": 0,
+                    "collectionURI": "http://gateway.marvel.com/v1/public/characters/1011318/events",
+                    "items": [],
+                    "returned": 0
+                },
+                "urls": [
+                    {
+                        "type": "detail",
+                        "url": "http://marvel.com/comics/characters/1011318/iron_fist_bei_bang-wen?utm_campaign=apiRef&utm_source=d90d196eb6b5387b6aee1c809b99b064"
+                    },
+                    {
+                        "type": "wiki",
+                        "url": "http://marvel.com/universe/Iron_Fist?utm_campaign=apiRef&utm_source=d90d196eb6b5387b6aee1c809b99b064"
+                    },
+                    {
+                        "type": "comiclink",
+                        "url": "http://marvel.com/comics/characters/1011318/iron_fist_bei_bang-wen?utm_campaign=apiRef&utm_source=d90d196eb6b5387b6aee1c809b99b064"
+                    }
+                ]
+            }
+        ]
+    }
+}

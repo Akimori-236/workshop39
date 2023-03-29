@@ -1,6 +1,7 @@
 package nus.iss.tfip.workshop39.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.json.Json;
+import nus.iss.tfip.workshop39.model.MarvelChar;
 import nus.iss.tfip.workshop39.service.MarvelAPIService;
 
 @Controller
@@ -24,27 +27,39 @@ public class MarvelController {
 
     // VIEW 1
     @GetMapping(path = "/characters")
-    public ResponseEntity<String> getCharacterList(@RequestParam(defaultValue = "20") Integer limit,
-            @RequestParam(defaultValue = "0") Integer offset) throws NoSuchAlgorithmException {
-
+    public ResponseEntity<String> getCharacterList(
+            @RequestParam(defaultValue = "20") Integer limit,
+            @RequestParam(defaultValue = "0") Integer offset,
+            @RequestParam(required = true) String search)
+            throws NoSuchAlgorithmException {
         // get from api
-        marvelAPI.getCharacters(limit, offset);
-        
+        List<MarvelChar> characters = marvelAPI.getCharacters(search, limit, offset);
+        String output = characters.stream()
+                .map(v -> v.toJson())
+                .toList()
+                .toString();
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body("");
+                .body(output);
     }
 
     // VIEW 2
     @GetMapping(path = "/character/{characterId}")
-    public ResponseEntity<String> getCharacter(@PathVariable int characterId) {
-
+    public ResponseEntity<String> getCharacter(@PathVariable(required = true) int characterId)
+            throws NoSuchAlgorithmException {
         // get from api
+        List<MarvelChar> characters = marvelAPI.getOneCharacter(characterId);
+        String output = characters.stream()
+                .map(v -> v.toJson())
+                .toList()
+                .toString();
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body("");
+                .body(output);
     }
 
     // VIEW 3
