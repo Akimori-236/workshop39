@@ -1,19 +1,23 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { MarvelChar } from '../models/MarvelChar';
 
-
+const SPRINGBOOT_URL = "http://localhost:8080/api/characters"
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  searchTerm!: string
-
   constructor(private http: HttpClient) { }
 
-  lookup(searchTerm: string) {
-    this.searchTerm = searchTerm
+  lookupList(search: string): Promise<MarvelChar[]> {
+    let params = new HttpParams()
+      .set('search', search)
     // send for springboot
+    return lastValueFrom(
+      this.http.get<MarvelChar[]>(SPRINGBOOT_URL, { params })
+    )
   }
 }

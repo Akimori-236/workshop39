@@ -24,10 +24,10 @@ export class SearchComponent {
   }
 
   search() {
-    const searchTerm = this.searchForm.value['search']
-    console.debug("searchTerm > ", searchTerm)
-    // call service
-    this.searchSvc.lookup(searchTerm)
-    this.router.navigate(['/characters'])
+    const search = this.searchForm.value['search']
+    console.debug("searchTerm > ", search)
+    this.router.navigate(['/characters'], {
+      queryParams: { search }
+    })
   }
 }

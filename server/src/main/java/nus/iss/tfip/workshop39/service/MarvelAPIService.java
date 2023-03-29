@@ -31,14 +31,14 @@ public class MarvelAPIService {
     @Value("${private.key}")
     private String privateKey;
 
-    public List<MarvelChar> getCharacters(String searchTerm, int limit, int offset) throws NoSuchAlgorithmException {
+    public List<MarvelChar> getCharacters(String search, int limit, int offset) throws NoSuchAlgorithmException {
         int ts = Instant.now().hashCode();
         String hash = HashingMD5.generateMarvelHash(ts, privateKey, PUBLIC_KEY);
         System.out.println(ts);
         System.out.println(hash);
 
         String url = UriComponentsBuilder.fromUriString(MARVEL_API)
-                .queryParam("nameStartsWith", searchTerm)
+                .queryParam("nameStartsWith", search)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset)
                 .queryParam("ts", ts)
