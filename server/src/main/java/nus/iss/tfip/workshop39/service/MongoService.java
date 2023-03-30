@@ -6,7 +6,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.json.JsonObject;
 import nus.iss.tfip.workshop39.repository.MarvelMongoRepo;
 
 @Service
@@ -22,6 +21,7 @@ public class MongoService {
 
     public String getCommentsById(int characterId) {
         List<Document> charList = mongoRepo.getCommentById(characterId);
-        return charList.toString();
+        List<String> jList = charList.stream().map(v -> v.toJson()).toList();
+        return jList.toString();
     }
 }
