@@ -3,6 +3,7 @@ package nus.iss.tfip.workshop39.hashing;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.codec.binary.Hex;
 
 // WEIRD thing is.. need outdated dependencies
 //  <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
@@ -31,6 +32,28 @@ public class HashingMD5 {
         byte[] digest = md.digest();
         // SPIT OUT
         String hash = DatatypeConverter.printHexBinary(digest);
+        return hash.toLowerCase();
+    }
+
+    // NEED THIS
+    // <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+    // <dependency>
+    // <groupId>commons-codec</groupId>
+    // <artifactId>commons-codec</artifactId>
+    // <version>1.15</version>
+    // </dependency>
+    public static String generateMarvelHashNEW(int timestamp, String privateKey, String publicKey)
+            throws NoSuchAlgorithmException {
+        // GET HASHING ALGO
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        // THING TO FEED IN
+        String password = timestamp + privateKey + publicKey;
+        // NOM NOM
+        md.update(password.getBytes());
+        // DIGEST
+        byte[] digest = md.digest();
+        // SPIT OUT
+        String hash = Hex.encodeHexString(digest);
         return hash.toLowerCase();
     }
 

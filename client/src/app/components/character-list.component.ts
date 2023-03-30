@@ -10,7 +10,7 @@ import { MarvelChar } from '../models/MarvelChar';
 })
 export class CharacterListComponent implements OnInit {
   search!: string
-  limit: number = 10
+  limit: number = 20
   offset: number = 0
   characterList: MarvelChar[] = []
 
@@ -21,10 +21,31 @@ export class CharacterListComponent implements OnInit {
       queryparams => this.search = queryparams['search']
     )
     console.debug("searching for.. ", this.search)
-    this.searchSvc.lookupList(this.search).then(
+    this.searchSvc.lookupList(this.search, this.limit, this.offset).then(
       v => this.characterList = v
     )
+    console.info(this.characterList)
   }
-  
 
+  previous() {
+    if (this.offset >= this.limit) {
+      this.offset -= this.limit
+    }
+    console.debug("new offset > " + this.offset)
+    // trigger service
+    this.searchSvc.lookupList(this.search, this.limit, this.offset).then(
+      v => this.characterList = v
+    )
+    console.info(this.characterList)
+  }
+
+  next() {
+    this.offset += this.limit
+    console.debug("new offset > " + this.offset)
+    // trigger service
+    this.searchSvc.lookupList(this.search, this.limit, this.offset).then(
+      v => this.characterList = v
+    )
+    console.info(this.characterList)
+  }
 }

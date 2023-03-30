@@ -32,13 +32,13 @@ public class MarvelAPIService {
     private String privateKey;
 
     public List<MarvelChar> getCharacters(String search, int limit, int offset) throws NoSuchAlgorithmException {
-        int ts = Instant.now().hashCode();
-        String hash = HashingMD5.generateMarvelHash(ts, privateKey, PUBLIC_KEY);
+        int ts = Instant.now().getNano();
+        String hash = HashingMD5.generateMarvelHashNEW(ts, privateKey, PUBLIC_KEY);
         System.out.println(ts);
         System.out.println(hash);
 
         String url = UriComponentsBuilder.fromUriString(MARVEL_API)
-                .queryParam("nameStartsWith", search)
+                .queryParam("nameStartsWith", search.strip())
                 .queryParam("limit", limit)
                 .queryParam("offset", offset)
                 .queryParam("ts", ts)
@@ -75,7 +75,7 @@ public class MarvelAPIService {
 
     public List<MarvelChar> getOneCharacter(int characterId) throws NoSuchAlgorithmException {
         int ts = Instant.now().hashCode();
-        String hash = HashingMD5.generateMarvelHash(ts, privateKey, PUBLIC_KEY);
+        String hash = HashingMD5.generateMarvelHashNEW(ts, privateKey, PUBLIC_KEY);
         System.out.println(ts);
         System.out.println(hash);
 

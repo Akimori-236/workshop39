@@ -10,26 +10,25 @@ import lombok.NoArgsConstructor;
 public class MarvelChar {
     private int id;
     private String name;
-    private String resourceURI;
+    private String description;
     private String thumbnail;
 
     public static MarvelChar toMarvelChar(JsonObject obj) {
         MarvelChar MarvelChar = new MarvelChar();
         MarvelChar.setId(obj.getInt("id"));
         MarvelChar.setName(obj.getString("name"));
-        MarvelChar.setResourceURI(obj.getString("resourceURI"));
+        MarvelChar.setDescription(obj.getString("description"));
         JsonObject t = obj.getJsonObject("thumbnail");
         MarvelChar.setThumbnail("%s.%s".formatted(t.getString("path"), t.getString("extension")));
         return MarvelChar;
     }
 
-    public String toJson() {
+    public JsonObject toJson() {
         return Json.createObjectBuilder()
                 .add("id", this.getId())
                 .add("name", this.getName())
-                .add("resourceURI", this.getResourceURI())
+                .add("description", this.getDescription())
                 .add("thumbnail", this.getThumbnail())
-                .build()
-                .toString();
+                .build();
     }
 }
