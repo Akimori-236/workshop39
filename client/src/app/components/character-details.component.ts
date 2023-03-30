@@ -21,7 +21,6 @@ export class CharacterDetailsComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnDestroy(): void {
-    console.debug(this.character)
     this.aRouteSub$.unsubscribe()
   }
 

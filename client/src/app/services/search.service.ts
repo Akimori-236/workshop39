@@ -30,4 +30,11 @@ export class SearchService {
       this.http.get<MarvelChar>(completeUrl)
     )
   }
+
+  postComment(characterId: number, comment: Comment) {
+    const completeUrl = SPRINGBOOT_URL + "/" + characterId
+    return lastValueFrom(
+      this.http.post<Comment>(completeUrl, comment)
+    )
+  }
 }
