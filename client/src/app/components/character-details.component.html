@@ -1,3 +1,20 @@
-<div>
-    <h1>View 2 - Character Details</h1>
+<div class="container text-center">
+  <button class="btn btn-danger" type="button" [routerLink]="['/']">
+    HOME
+  </button>
+  <h1>View 2 - Character Details</h1>
+
+  <img class="w-50" src="{{ character.thumbnail }}" />
+  <div class="row">
+    <h2 class="col me-auto">{{ character.name }}</h2>
+    <button
+      class="col-4 ms-auto btn btn-outline-warning"
+      type="button"
+      [routerLink]="['/characters/' + character.id + '/comment']"
+    >
+      Comment
+    </button>
+  </div>
+
+  <p>{{ character.description }}</p>
 </div>

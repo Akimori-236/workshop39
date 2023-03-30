@@ -12,15 +12,22 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  lookupList(search: string, limit: number, offset: number): Promise<MarvelChar[]> {
+  getCharList(search: string, limit: number, offset: number): Promise<MarvelChar[]> {
     let params = new HttpParams()
       .set('search', search)
       .set('limit', limit)
       .set('offset', offset)
-
     // send for springboot
     return lastValueFrom(
       this.http.get<MarvelChar[]>(SPRINGBOOT_URL, { params })
+    )
+  }
+
+  getCharById(characterId: number): Promise<MarvelChar> {
+    const completeUrl = SPRINGBOOT_URL + "/" + characterId
+    console.debug(completeUrl)
+    return lastValueFrom(
+      this.http.get<MarvelChar>(completeUrl)
     )
   }
 }

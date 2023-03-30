@@ -1,4 +1,4 @@
-package nus.iss.tfip.workshop39.hashing;
+package nus.iss.tfip.workshop39.Util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

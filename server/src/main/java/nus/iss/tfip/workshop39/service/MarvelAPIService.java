@@ -18,7 +18,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
-import nus.iss.tfip.workshop39.hashing.HashingMD5;
+import nus.iss.tfip.workshop39.Util.HashingMD5;
 import nus.iss.tfip.workshop39.model.MarvelChar;
 
 @Service
@@ -73,7 +73,7 @@ public class MarvelAPIService {
                 .toList();
     }
 
-    public List<MarvelChar> getOneCharacter(int characterId) throws NoSuchAlgorithmException {
+    public MarvelChar getOneCharacter(int characterId) throws NoSuchAlgorithmException {
         int ts = Instant.now().hashCode();
         String hash = HashingMD5.generateMarvelHashNEW(ts, privateKey, PUBLIC_KEY);
         System.out.println(ts);
@@ -107,6 +107,6 @@ public class MarvelAPIService {
         return results.stream()
                 .map(v -> v.asJsonObject())
                 .map(MarvelChar::toMarvelChar)
-                .toList();
+                .toList().get(0);
     }
 }

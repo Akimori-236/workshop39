@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.json.JsonObject;
 import nus.iss.tfip.workshop39.model.MarvelChar;
-import nus.iss.tfip.workshop39.repository.MarvelRedisRepo;
 import nus.iss.tfip.workshop39.service.MarvelAPIService;
+import nus.iss.tfip.workshop39.service.RedisService;
 
 @Controller
 @ResponseBody
@@ -30,7 +29,7 @@ public class MarvelController {
         @Autowired
         private MarvelAPIService marvelAPI;
         @Autowired
-        private MarvelRedisRepo redisRepo;
+        private RedisService redisSvc;
 
         // VIEW 1
         @GetMapping(path = "/characters")
@@ -40,16 +39,13 @@ public class MarvelController {
                         @RequestParam(required = true) String search)
                         throws NoSuchAlgorithmException {
                 System.out.println("Searching for " + search + limit + offset);
-                // get from api
+                // GET FROM API
                 List<MarvelChar> characters = marvelAPI.getCharacters(search, limit, offset);
                 // REDIS CACHING
-                List<JsonObject> jsonCharList = characters.stream()
-                                .map(v -> v.toJson())
-                                .toList();
-                redisRepo.cacheCharacters(jsonCharList);
+                redisSvc.cacheCharacters(characters);
                 // OUTPUT
                 String output = characters.stream()
-                                .map(v -> v.toJson())
+                                .map(v -> redisSvc.toJson(v))
                                 .toList()
                                 .toString();
                 return ResponseEntity
@@ -59,16 +55,25 @@ public class MarvelController {
         }
 
         // VIEW 2
-        @GetMapping(path = "/character/{characterId}")
-        public ResponseEntity<String> getCharacter(@PathVariable(required = true) int characterId)
+        @GetMapping(path = "/characters/{characterId}")
+        public ResponseEntity<String> getCharacter(@PathVariable int characterId)
                         throws NoSuchAlgorithmException {
-                // get from api
-                List<MarvelChar> characters = marvelAPI.getOneCharacter(characterId);
-                String output = characters.stream()
-                                .map(v -> v.toJson())
-                                .toList()
-                                .toString();
-
+                System.out.println("Getting character no:" + characterId);
+                // GET FROM REDIS
+                MarvelChar mc = redisSvc.getOneCharacter(characterId);
+                String output = redisSvc.toJson(mc).toString();
+                // FAILSAFE - get from API
+                if (output.isBlank()) {
+                        mc = marvelAPI.getOneCharacter(characterId);
+                        output = redisSvc.toJson(mc).toString();
+                }
+                System.out.println(output);
+                if (output.isEmpty()) {
+                        return ResponseEntity
+                                        .status(HttpStatus.GONE)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .body("");
+                }
                 return ResponseEntity
                                 .status(HttpStatus.OK)
                                 .contentType(MediaType.APPLICATION_JSON)

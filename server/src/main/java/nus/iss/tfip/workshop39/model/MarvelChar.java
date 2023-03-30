@@ -1,6 +1,5 @@
 package nus.iss.tfip.workshop39.model;
 
-import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,14 +20,5 @@ public class MarvelChar {
         JsonObject t = obj.getJsonObject("thumbnail");
         MarvelChar.setThumbnail("%s.%s".formatted(t.getString("path"), t.getString("extension")));
         return MarvelChar;
-    }
-
-    public JsonObject toJson() {
-        return Json.createObjectBuilder()
-                .add("id", this.getId())
-                .add("name", this.getName())
-                .add("description", this.getDescription())
-                .add("thumbnail", this.getThumbnail())
-                .build();
     }
 }
