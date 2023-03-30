@@ -4,7 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { MarvelChar } from '../models/MarvelChar';
 import { CharacterComment } from '../models/CharacterComment';
 
-const SPRINGBOOT_URL = "http://localhost:8080/api/characters"
+const SPRINGBOOT_URL = "/api/characters"
 
 @Injectable({
   providedIn: 'root'

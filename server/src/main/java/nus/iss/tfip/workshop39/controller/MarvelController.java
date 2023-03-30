@@ -42,7 +42,7 @@ public class MarvelController {
                         @RequestParam(defaultValue = "0") Integer offset,
                         @RequestParam(required = true) String search)
                         throws NoSuchAlgorithmException {
-                System.out.println("Searching for " + search + limit + offset);
+                System.out.println("CONTROLLER > Searching for " + search + limit + offset);
                 // GET FROM API
                 List<MarvelChar> characters = marvelAPI.getCharacters(search, limit, offset);
                 // REDIS CACHING
@@ -62,7 +62,7 @@ public class MarvelController {
         @GetMapping(path = "/characters/{characterId}")
         public ResponseEntity<String> getCharacter(@PathVariable int characterId)
                         throws NoSuchAlgorithmException {
-                System.out.println("Getting character no:" + characterId);
+                System.out.println("CONTROLLER > Getting character no:" + characterId);
                 // GET FROM REDIS
                 MarvelChar mc = redisSvc.getOneCharacter(characterId);
                 String output = redisSvc.toJson(mc).toString();
@@ -71,7 +71,7 @@ public class MarvelController {
                         mc = marvelAPI.getOneCharacter(characterId);
                         output = redisSvc.toJson(mc).toString();
                 }
-                System.out.println(output);
+                System.out.println("CONTROLLER > Redis json data > " + output);
                 if (output.isEmpty()) {
                         return ResponseEntity
                                         .status(HttpStatus.GONE)
@@ -87,7 +87,7 @@ public class MarvelController {
         // VIEW 3
         @PostMapping(path = "/characters/{characterId}", consumes = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> postComment(@PathVariable int characterId, @RequestBody String comment) {
-                System.out.println("Incoming comment > " + comment);
+                System.out.println("CONTROLLER > Incoming comment > " + comment);
                 // save comment to mongo
                 mongoSvc.insertComment(comment);
                 // get from api
@@ -102,7 +102,7 @@ public class MarvelController {
         public ResponseEntity<String> getComments(@PathVariable int characterId) {
                 // get comments to mongo
                 String comments = mongoSvc.getCommentsById(characterId);
-                System.out.println(comments);
+                System.out.println("CONTROLLER > Mongo comments > " + comments);
                 return ResponseEntity
                                 .status(HttpStatus.OK)
                                 .contentType(MediaType.APPLICATION_JSON)

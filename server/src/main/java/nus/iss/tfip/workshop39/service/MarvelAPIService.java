@@ -34,8 +34,8 @@ public class MarvelAPIService {
     public List<MarvelChar> getCharacters(String search, int limit, int offset) throws NoSuchAlgorithmException {
         int ts = Instant.now().getNano();
         String hash = HashingMD5.generateMarvelHashNEW(ts, privateKey, PUBLIC_KEY);
-        System.out.println(ts);
-        System.out.println(hash);
+        System.out.println("HASH > timestamp - " + ts);
+        System.out.println("HASH > " + hash);
 
         String url = UriComponentsBuilder.fromUriString(MARVEL_API)
                 .queryParam("nameStartsWith", search.strip())
@@ -60,8 +60,6 @@ public class MarvelAPIService {
             // return Collections.EMPTY_LIST;
         }
         // READ PAYLOAD
-        // System.out.println("==================================================" +
-        // payload);
         JsonReader reader = Json.createReader(new StringReader(payload));
         JsonObject marvelResp = reader.readObject();
         JsonObject data = marvelResp.getJsonObject("data");
@@ -76,8 +74,8 @@ public class MarvelAPIService {
     public MarvelChar getOneCharacter(int characterId) throws NoSuchAlgorithmException {
         int ts = Instant.now().hashCode();
         String hash = HashingMD5.generateMarvelHashNEW(ts, privateKey, PUBLIC_KEY);
-        System.out.println(ts);
-        System.out.println(hash);
+        System.out.println("HASH > timestamp - " + ts);
+        System.out.println("HASH > " + hash);
 
         String url = UriComponentsBuilder.fromUriString(MARVEL_API + "/" + characterId)
                 .queryParam("ts", ts)

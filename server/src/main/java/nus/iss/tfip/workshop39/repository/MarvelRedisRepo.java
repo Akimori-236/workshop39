@@ -23,7 +23,7 @@ public class MarvelRedisRepo {
 
     public JsonObject getOneCharacter(int id) {
         String jsonString = template.opsForValue().get(String.valueOf(id));
-        System.out.println("REDIS> " + jsonString);
+        System.out.println("REDIS > " + jsonString);
         // JSON PARSE
         return MyJson.jsonParse(jsonString);
     }
