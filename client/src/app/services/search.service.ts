@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { MarvelChar } from '../models/MarvelChar';
+import { CharacterComment } from '../models/CharacterComment';
 
 const SPRINGBOOT_URL = "http://localhost:8080/api/characters"
 
@@ -31,10 +32,12 @@ export class SearchService {
     )
   }
 
-  postComment(characterId: number, comment: Comment) {
+  postComment(characterId: number, comment: CharacterComment) {
     const completeUrl = SPRINGBOOT_URL + "/" + characterId
+    const payload = comment
+    console.info("payload > " + payload)
     return lastValueFrom(
-      this.http.post<Comment>(completeUrl, comment)
+      this.http.post<Comment>(completeUrl, payload)
     )
   }
 }

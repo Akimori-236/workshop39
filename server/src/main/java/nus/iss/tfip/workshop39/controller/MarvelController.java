@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,9 +82,11 @@ public class MarvelController {
         }
 
         // VIEW 3
-        @PostMapping(path = "/character/{characterId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<String> postComment(@PathVariable int characterId) {
-
+        @PostMapping(path = "/characters/{characterId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<String> postComment(@PathVariable int characterId, @RequestBody String comment) {
+                System.out.println("Incoming comment > " + comment);
+                // save comment to mongo
+                
                 // get from api
                 return ResponseEntity
                                 .status(HttpStatus.CREATED)
