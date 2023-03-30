@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { Subscription } from 'rxjs';
 import { MarvelChar } from '../models/MarvelChar';
+import { CharacterComment } from '../models/CharacterComment';
 
 @Component({
   selector: 'app-character-details',
@@ -13,6 +14,7 @@ export class CharacterDetailsComponent implements OnInit, OnDestroy {
   aRouteSub$!: Subscription
   characterId!: number
   character!: MarvelChar
+  commentList: CharacterComment[] = []
 
 
   constructor(
@@ -37,7 +39,12 @@ export class CharacterDetailsComponent implements OnInit, OnDestroy {
     await this.searchSvc.getCharById(this.characterId)
       .then(v => this.character = v)
       .catch(err => console.warn(err))
-    console.info(this.character)
+    console.info("character > " + this.character)
+
+    // get mongo comments
+    await this.searchSvc.getComments(this.characterId)
+      .then(v => this.commentList = v)
+    console.info("comments > " + this.commentList)
   }
 
 

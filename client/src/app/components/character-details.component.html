@@ -15,6 +15,18 @@
       Comment
     </button>
   </div>
-
-  <p>{{ character.description }}</p>
+  <div>
+    <p>{{ character.description }}</p>
+  </div>
+  <div>
+    <table>
+      <tbody>
+        <tr *ngFor="let comment of commentList">
+          <td>
+            <span>{{ comment.comment }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -52,6 +52,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     }
     this.searchSvc.postComment(this.characterId, comment)
     // after saving comment, navigate to view 2
+    this.router.navigate(['/characters', this.characterId])
   }
 
 }

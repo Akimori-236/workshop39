@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import nus.iss.tfip.workshop39.model.MarvelChar;
 import nus.iss.tfip.workshop39.service.MarvelAPIService;
+import nus.iss.tfip.workshop39.service.MongoService;
 import nus.iss.tfip.workshop39.service.RedisService;
 
 @Controller
@@ -31,6 +32,8 @@ public class MarvelController {
         private MarvelAPIService marvelAPI;
         @Autowired
         private RedisService redisSvc;
+        @Autowired
+        private MongoService mongoSvc;
 
         // VIEW 1
         @GetMapping(path = "/characters")
@@ -86,7 +89,7 @@ public class MarvelController {
         public ResponseEntity<String> postComment(@PathVariable int characterId, @RequestBody String comment) {
                 System.out.println("Incoming comment > " + comment);
                 // save comment to mongo
-                
+                mongoSvc.insertComment(comment);
                 // get from api
                 return ResponseEntity
                                 .status(HttpStatus.CREATED)
@@ -94,4 +97,15 @@ public class MarvelController {
                                 .body("");
         }
 
+        // VIEW 3.5
+        @GetMapping(path = "/characters/{characterId}/comments")
+        public ResponseEntity<String> getComments(@PathVariable int characterId) {
+                // get comments to mongo
+                String comments = mongoSvc.getCommentsById(characterId);
+                System.out.println(comments);
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(comments);
+        }
 }

@@ -40,4 +40,11 @@ export class SearchService {
       this.http.post<Comment>(completeUrl, payload)
     )
   }
+
+  getComments(characterId: number): Promise<CharacterComment[]> {
+    const completeUrl = SPRINGBOOT_URL + "/" + characterId + "/comments"
+    return lastValueFrom(
+      this.http.get<CharacterComment[]>(completeUrl)
+    )
+  }
 }
