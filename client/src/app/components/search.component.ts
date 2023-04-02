@@ -14,7 +14,6 @@ export class SearchComponent {
 
   constructor(
     private fb: FormBuilder,
-    private searchSvc: SearchService,
     private router: Router) { }
 
   ngOnInit(): void {

@@ -18,8 +18,7 @@ export class CharacterListComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private searchSvc: SearchService,
-    private router: Router) { }
+    private searchSvc: SearchService) { }
 
   ngOnDestroy(): void {
     this.aRouteSub$.unsubscribe()

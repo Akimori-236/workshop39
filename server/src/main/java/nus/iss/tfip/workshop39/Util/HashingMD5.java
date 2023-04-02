@@ -2,7 +2,9 @@ package nus.iss.tfip.workshop39.Util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import javax.xml.bind.DatatypeConverter;
+
 import org.apache.commons.codec.binary.Hex;
 
 // WEIRD thing is.. need outdated dependencies
